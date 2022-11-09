@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:weather_forecast/widgets/days.dart';
 import 'package:weather_forecast/widgets/prediction.dart';
 import 'package:weather_forecast/widgets/weather_home.dart';
 import 'package:weather_forecast/widgets/weather_list.dart';
@@ -153,125 +154,172 @@ class _HomePageState extends State<HomePage> {
       "time": "12.00 ${"PM"}"
     },
   ];
+
+  List<Map<String, dynamic>> bottombanner = [
+    {
+      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannername": "Selasa",
+      "bottombannerdetails": "Hujan Petir",
+      "bottombannerdegree": "19 ${"°C"}"
+    },
+    {
+      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannername": "Rabu",
+      "bottombannerdetails": "Hujan Deras",
+      "bottombannerdegree": "17 ${"°C"}"
+    },
+    {
+      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannername": "Kamis",
+      "bottombannerdetails": "Hujan Deras",
+      "bottombannerdegree": "17 ${"°C"}"
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-              margin: EdgeInsets.only(top: 20, left: 15, right: 15),
-              child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40.w,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        color: Color(0xff2E3A59),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 0.5.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DropdownButton(
-                              // Initial Value
-                              value: dropdownvalue,
-        
-                              // Down Arrow Icon
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: Color(0xff2E3A59),
-                              ),
-        
-                              // Array list of items
-                              items: items.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownvalue = newValue!;
-                                });
-                              },
-                            ),
-                          ],
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 20, left: 15, right: 15),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 40.w,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Color(0xff2E3A59),
                         ),
-                      )
-                    ],
+                        Container(
+                          margin: EdgeInsets.only(left: 0.5.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              DropdownButton(
+                                // Initial Value
+                                value: dropdownvalue,
+
+                                // Down Arrow Icon
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Color(0xff2E3A59),
+                                ),
+
+                                // Array list of items
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue = newValue!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 7.w),
+                    width: 45.w,
+                    child: TextField(
+                      cursorColor: Colors.grey,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          suffixIcon: Container(
+                            padding: EdgeInsets.all(15),
+                            child: Icon(Icons.search),
+                            width: 18,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+              Weather_Home(),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(top: 3.h),
+                child: Text(
+                  "Cuaca Per Jam",
+                  style: TextStyle(
+                      color: Color(0xff000000),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 120,
+                width: 500,
+                child: ListView.builder(
+                  itemCount: weatherCategory.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return WeatherList(
+                        resimurl: weatherCategory[index]["resim"].toString(),
+                        degree:
+                            weatherCategory[index]["weatherdegree"].toString(),
+                        hour: weatherCategory[index]["time"].toString(),
+                        index: index);
+                  },
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(top: 3.h),
+                child: Text(
+                  "Harian",
+                  style: TextStyle(
+                      color: Color(0xff000000),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Prediction(),
+              Container(
+                child: SizedBox(
+                  height: 180,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: bottombanner.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return Days(
+                        botbannerimage:
+                            bottombanner[index]["bottombannerimage"].toString(),
+                        botbannername:
+                            bottombanner[index]["bottombannername"].toString(),
+                        botbannerdetail: bottombanner[index]
+                                ["bottombannerdetail"]
+                            .toString(),
+                        botbannerdegree: bottombanner[index]
+                                ["bottombannerdegree"]
+                            .toString(),
+                        index: index,
+                      );
+                    },
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(left: 7.w),
-                  width: 45.w,
-                  child: TextField(
-                    cursorColor: Colors.grey,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none),
-                        suffixIcon: Container(
-                          padding: EdgeInsets.all(15),
-                          child: Icon(Icons.search),
-                          width: 18,
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            Weather_Home(),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 3.h),
-              child: Text(
-                "Cuaca Per Jam",
-                style: TextStyle(
-                    color: Color(0xff000000),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              height: 120,
-              width: 500,
-              child: ListView.builder(
-                itemCount: weatherCategory.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return WeatherList(
-                      resimurl: weatherCategory[index]["resim"].toString(),
-                      degree:
-                          weatherCategory[index]["weatherdegree"].toString(),
-                      hour: weatherCategory[index]["time"].toString(),
-                      index: index);
-                },
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 3.h),
-              child: Text(
-                "Harian",
-                style: TextStyle(
-                    color: Color(0xff000000),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-              
-            ),
-            Prediction(),
-          ],
-              ),
-            ),
-        ));
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

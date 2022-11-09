@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Days extends StatefulWidget {
-  const Days({super.key});
+  const Days({
+    super.key,
+    required this.botbannerimage,
+    required this.botbannername,
+    required this.botbannerdetail,
+    required this.botbannerdegree,
+    required this.index,
+  });
+
+  final String botbannerimage;
+  final String botbannername;
+  final String botbannerdetail;
+  final String botbannerdegree;
+  final int index;
 
   @override
   State<Days> createState() => _DaysState();
@@ -12,28 +26,46 @@ class Days extends StatefulWidget {
 class _DaysState extends State<Days> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(top: 100, left: 20),
-        height: 72,
-        width: 343,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Color(0xffD2DFFF),
-        ),
-        child: Row(
-          children: [
-            Container(
-              child: Image.asset("assets/images/days.png"),
-            ),
-            Column(
+    return Container(
+      margin: EdgeInsets.only(top: 1.h),
+      alignment: Alignment.center,
+      height: 8.h,
+      width: 100.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color(0xffD2DFFF),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 1.h, left: 3.w),
+            child: Image.asset(widget.botbannerimage),
+          ),
+          Container(
+            height: 9.h,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("Selasa"), Text("Hujan Petir")],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  widget.botbannername,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(widget.botbannerdetail)
+              ],
             ),
-            Text("19°C"),
-            Icon(Icons.arrow_right)
-          ],
-        ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.botbannerdegree),
+                Icon(Icons.arrow_right),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

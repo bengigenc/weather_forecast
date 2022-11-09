@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer( 
-  builder: (context, orientation, screenType) {
-    return MaterialApp(
-      home: Days(),
+    return ResponsiveSizer(
+      builder: (context, orientation, screenType) {
+        return MaterialApp(
+          home: HomePage(),
+        );
+      },
     );
-  },
-);
   }
 }
 

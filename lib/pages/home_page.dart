@@ -173,6 +173,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          height: 100.h,
           margin: EdgeInsets.only(top: 20, left: 15, right: 15),
           child: Column(
             children: [
@@ -247,6 +248,7 @@ class _HomePageState extends State<HomePage> {
                   child: SizedBox(
                     height: 180,
                     child: ListView.builder(
+                      
                       shrinkWrap: true,
                       itemCount: bottombanner.length,
                       scrollDirection: Axis.vertical,

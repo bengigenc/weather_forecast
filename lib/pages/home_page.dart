@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_forecast/pages/home_detail.dart';
 import 'package:weather_forecast/widgets/days.dart';
 import 'package:weather_forecast/widgets/dropdownWidget.dart';
@@ -168,6 +169,20 @@ class _HomePageState extends State<HomePage> {
     }
   ];
 
+final _key1= GlobalKey();
+void initState() {
+  super.initState();
+  WidgetsBinding.instance!.addPostFrameCallback(
+    (_) => ShowCaseWidget.of(context)!.startShowCase(
+      [
+        _key1,
+        
+        
+      ],
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,17 +202,21 @@ class _HomePageState extends State<HomePage> {
                           Icons.location_on,
                           color: Color(0xff2E3A59),
                         ),
-                        DropDownWidget(),
+                        Showcase(
+                          key: _key1,
+                          description: "location",
+                          child: DropDownWidget()),
                       ],
                     ),
                   ),
                   SearchWidget()
                 ],
               ),
-              GestureDetector(child: FadeInLeft(child: Weather_Home()), onTap: () {
+              GestureDetector(child: FadeInLeft(delay: Duration(milliseconds: 2000),child: Weather_Home()), onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDetail(),));
               },),
               FadeInRight(
+                delay: Duration(milliseconds: 3000),
                 child: Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 3.h),
@@ -211,6 +230,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FadeInUp(
+                delay: Duration(milliseconds: 4000),
                 child: Container(
                   margin: EdgeInsets.only(top: 10),
                   height: 120,
@@ -230,6 +250,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FadeInRight(
+                delay: Duration(milliseconds: 5000),
                 child: Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 3.h, bottom: 3.h),
@@ -242,11 +263,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              FadeInDown(child: Prediction()),
-              FadeInUp(
+              FadeInDown(delay: Duration(milliseconds: 6000),child: Prediction()),
+              FadeInUp(delay: Duration(milliseconds: 7000),
                 child: Container(
                   child: SizedBox(
-                    height: 180,
+                    height: 200,
                     child: ListView.builder(
                       
                       shrinkWrap: true,

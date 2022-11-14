@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_forecast/pages/home_detail.dart';
 import 'package:weather_forecast/pages/home_page.dart';
 import 'package:weather_forecast/widgets/days.dart';
@@ -21,7 +22,10 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer(
       builder: (context, orientation, screenType) {
         return MaterialApp(
-          home: HomePage(),
+          home: ShowCaseWidget(
+            builder: Builder(
+              builder: (context) => HomePage(),),
+            ),
         );
       },
     );

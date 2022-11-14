@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -16,8 +17,7 @@ class _AQIState extends State<AQI> {
     return Container(
       height: 15.h,
       width: 100.w,
-      decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/pembe.png"))),
+      color: Colors.transparent,
       child: Row(
         children: [
           Container(

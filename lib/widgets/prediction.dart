@@ -15,7 +15,7 @@ class _PredictionState extends State<Prediction> {
   Widget build(BuildContext context) {
     return  Container(
       height: 10.h,
-      width: 100.w,
+      width: 1100.w,
       decoration: BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/images/pembe.png",),fit: BoxFit.cover)),
       child: Row(

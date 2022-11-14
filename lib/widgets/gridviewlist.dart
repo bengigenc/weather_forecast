@@ -9,25 +9,25 @@ class GridViewList extends StatefulWidget {
   State<GridViewList> createState() => _GridViewListState();}
 class _GridViewListState extends State<GridViewList> {
 List<String> list1 = [
-    "assets/images/yuzde.png"
-        "assets/images/ic_2.png"
-        "assets/images/ic_3.png"
+    "assets/images/ic_1.png",
+        "assets/images/ic_2.png",
+        "assets/images/ic_3.png",
         "assets/images/ic_4.png"];
   List<String> list2 = [
-    "86%"
-        "940 pHa"
-        "1 km/h"
+    "86%",
+        "940 pHa",
+        "1 km/h",
         "14%"];
   List<String> list3 = [
-    "Kelembaban"
-        "Tekanan Udara"
-        "Kecepatan Angin"
+    "Kelembaban",
+        "Tekanan Udara",
+        "Kecepatan Angin",
         "Kabut"];
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height: 50.h,
-      width: 100.w,
+      height: 20.h,
+      width: 95.w,
         child:  GridView.builder(
                   padding: EdgeInsets.all(0),
                 physics:  NeverScrollableScrollPhysics(),
@@ -40,19 +40,18 @@ List<String> list1 = [
                 ),
                 itemCount: list1.length,
                 itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 1,right: 1),
-                  child: Container(
+                return Container(
                     decoration: BoxDecoration(
                          color: const Color(0xffF3F3F3),
                          borderRadius: BorderRadius.circular(15)),
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 5),
                       child: Row(
                         children: [
                           Image.asset(list1[index].toString()),
-                          SizedBox(width: 15.w,),
+                          SizedBox(width: 10.w,),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children:  [
                               Text(list2[index].toString()),
@@ -62,8 +61,8 @@ List<String> list1 = [
                       ),
                       
                     ),
-                  ),
-                );
+                  )
+                ;
                 },
               ),
       )

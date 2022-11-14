@@ -3,6 +3,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:weather_forecast/pages/home_detail.dart';
 import 'package:weather_forecast/pages/home_page.dart';
 import 'package:weather_forecast/widgets/days.dart';
+
 import 'package:weather_forecast/widgets/gridviewlist.dart';
 import 'package:weather_forecast/widgets/homedetWeather.dart';
 import 'package:weather_forecast/widgets/prediction.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer(
       builder: (context, orientation, screenType) {
         return MaterialApp(
-          home: HomeDetail(),
+          home: HomePage(),
         );
       },
     );

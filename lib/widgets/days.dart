@@ -36,23 +36,33 @@ class _DaysState extends State<Days> {
         color: Color(0xffD2DFFF),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        
         children: [
           Container(
-            padding: EdgeInsets.only(top: 1.h, left: 3.w),
-            child: Image.asset(widget.botbannerimage),
-          ),
-          Container(
-            height: 9.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            
+            width: 70.w,
+            child: Row(
+              
               children: [
-                Text(
-                  widget.botbannername,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Container(
+                  padding: EdgeInsets.only(top: 1.h, left: 4.w, right: 4.w),
+
+                  child: Image.asset(widget.botbannerimage),
                 ),
-                Text(widget.botbannerdetail)
+                Container(
+                  height: 9.h,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        widget.botbannername,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(widget.botbannerdetail)
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,9 +1,13 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:weather_forecast/pages/home_detail.dart';
 import 'package:weather_forecast/widgets/days.dart';
+import 'package:weather_forecast/widgets/dropdownWidget.dart';
 import 'package:weather_forecast/widgets/prediction.dart';
+import 'package:weather_forecast/widgets/searchWidget.dart';
 import 'package:weather_forecast/widgets/weather_home.dart';
 import 'package:weather_forecast/widgets/weather_list.dart';
 
@@ -15,18 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Initial Selected Value
-  String dropdownvalue = 'Konya';
-
-// List of items in our dropdown menu
-  var items = [
-    'Konya',
-    'Karaman',
-    'Çekmeköy',
-    "Ramazan'ın evi",
-    'Kırıkkale',
-  ];
-
   List<Map<String, dynamic>> weatherCategory = [
     {
       "resim": "assets/images/yagmur.png",
@@ -34,18 +26,18 @@ class _HomePageState extends State<HomePage> {
       "time": "0.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
+      "resim": "assets/images/rainy.png",
       "weatherdegree": "20 ${"°C"}",
       "time": "1.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
-      "weatherdegree": "20 ${"°C"}",
+      "resim": "assets/images/night_storm.png",
+      "weatherdegree": "19 ${"°C"}",
       "time": "2.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
-      "weatherdegree": "20 ${"°C"}",
+      "resim": "assets/images/cloudy.png",
+      "weatherdegree": "19 ${"°C"}",
       "time": "3.00 ${"AM"}"
     },
     {
@@ -157,19 +149,19 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> bottombanner = [
     {
-      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannerimage": "assets/images/blueStorm.png",
       "bottombannername": "Selasa",
       "bottombannerdetails": "Hujan Petir",
       "bottombannerdegree": "19 ${"°C"}"
     },
     {
-      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannerimage": "assets/images/blueRainy.png",
       "bottombannername": "Rabu",
       "bottombannerdetails": "Hujan Deras",
       "bottombannerdegree": "17 ${"°C"}"
     },
     {
-      "bottombannerimage": "assets/images/bulut.png",
+      "bottombannerimage": "assets/images/blueRainy.png",
       "bottombannername": "Kamis",
       "bottombannerdetails": "Hujan Deras",
       "bottombannerdegree": "17 ${"°C"}"
@@ -194,125 +186,86 @@ class _HomePageState extends State<HomePage> {
                           Icons.location_on,
                           color: Color(0xff2E3A59),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 0.5.w),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              DropdownButton(
-                                // Initial Value
-                                value: dropdownvalue,
-
-                                // Down Arrow Icon
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Color(0xff2E3A59),
-                                ),
-
-                                // Array list of items
-                                items: items.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                // After selecting the desired option,it will
-                                // change button value to selected value
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        )
+                        DropDownWidget(),
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 7.w),
-                    width: 45.w,
-                    child: TextField(
-                      cursorColor: Colors.grey,
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none),
-                          suffixIcon: Container(
-                            padding: EdgeInsets.all(15),
-                            child: Icon(Icons.search),
-                            width: 18,
-                          )),
-                    ),
-                  ),
+                  SearchWidget()
                 ],
               ),
-              Weather_Home(),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(top: 3.h),
-                child: Text(
-                  "Cuaca Per Jam",
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+              GestureDetector(child: FadeInLeft(child: Weather_Home()), onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDetail(),));
+              },),
+              FadeInRight(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(top: 3.h),
+                  child: Text(
+                    "Cuaca Per Jam",
+                    style: TextStyle(
+                        color: Color(0xff000000),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                height: 120,
-                width: 500,
-                child: ListView.builder(
-                  itemCount: weatherCategory.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return WeatherList(
-                        resimurl: weatherCategory[index]["resim"].toString(),
-                        degree:
-                            weatherCategory[index]["weatherdegree"].toString(),
-                        hour: weatherCategory[index]["time"].toString(),
-                        index: index);
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(top: 3.h),
-                child: Text(
-                  "Harian",
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Prediction(),
-              Container(
-                child: SizedBox(
-                  height: 180,
+              FadeInUp(
+                child: Container(
+                  margin: EdgeInsets.only(top: 10),
+                  height: 120,
+                  width: 500,
                   child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: bottombanner.length,
-                    scrollDirection: Axis.vertical,
+                    itemCount: weatherCategory.length,
+                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return Days(
-                        botbannerimage:
-                            bottombanner[index]["bottombannerimage"].toString(),
-                        botbannername:
-                            bottombanner[index]["bottombannername"].toString(),
-                        botbannerdetail: bottombanner[index]
-                                ["bottombannerdetail"]
-                            .toString(),
-                        botbannerdegree: bottombanner[index]
-                                ["bottombannerdegree"]
-                            .toString(),
-                        index: index,
-                      );
+                      return WeatherList(
+                          resimurl: weatherCategory[index]["resim"].toString(),
+                          degree:
+                              weatherCategory[index]["weatherdegree"].toString(),
+                          hour: weatherCategory[index]["time"].toString(),
+                          index: index);
                     },
+                  ),
+                ),
+              ),
+              FadeInRight(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(top: 3.h, bottom: 3.h),
+                  child: Text(
+                    "Harian",
+                    style: TextStyle(
+                        color: Color(0xff000000),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              FadeInDown(child: Prediction()),
+              FadeInUp(
+                child: Container(
+                  child: SizedBox(
+                    height: 180,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: bottombanner.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return Days(
+                          botbannerimage:
+                              bottombanner[index]["bottombannerimage"].toString(),
+                          botbannername:
+                              bottombanner[index]["bottombannername"].toString(),
+                          botbannerdetail: bottombanner[index]
+                                  ["bottombannerdetails"]
+                              .toString(),
+                          botbannerdegree: bottombanner[index]
+                                  ["bottombannerdegree"]
+                              .toString(),
+                          index: index,
+                        );
+                      },
+                    ),
                   ),
                 ),
               )

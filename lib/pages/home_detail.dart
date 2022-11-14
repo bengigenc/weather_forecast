@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:weather_forecast/widgets/AQI.dart';
+
 import 'package:weather_forecast/widgets/gridviewlist.dart';
 import 'package:weather_forecast/widgets/homedetWeather.dart';
 
@@ -23,18 +24,18 @@ class _HomeDetailState extends State<HomeDetail> {
       "time": "0.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
+      "resim": "assets/images/rainy.png",
       "weatherdegree": "20 ${"°C"}",
       "time": "1.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
-      "weatherdegree": "20 ${"°C"}",
+      "resim": "assets/images/night_storm.png",
+      "weatherdegree": "19 ${"°C"}",
       "time": "2.00 ${"AM"}"
     },
     {
-      "resim": "assets/images/yagmur.png",
-      "weatherdegree": "20 ${"°C"}",
+      "resim": "assets/images/cloudy.png",
+      "weatherdegree": "19 ${"°C"}",
       "time": "3.00 ${"AM"}"
     },
     {
@@ -146,6 +147,18 @@ class _HomeDetailState extends State<HomeDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+      
+        centerTitle: true,
+        backgroundColor: Color(0xff4F7FFA),
+        elevation: 0,
+        title: Text("Tanjungsiang, Subang", style: TextStyle(color: Colors.white),),
+        actions: [Padding(
+          padding:  EdgeInsets.only(right: 3.w),
+          child: Icon(Icons.more_horiz_rounded, color: Colors.white,),
+        )],
+        
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

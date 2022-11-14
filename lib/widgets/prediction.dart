@@ -14,10 +14,10 @@ class _PredictionState extends State<Prediction> {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height: 15.h,
+      height: 10.h,
       width: 100.w,
       decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/pembe.png"))),
+          image: DecorationImage(image: AssetImage("assets/images/pembe.png",),fit: BoxFit.cover)),
       child: Row(
         children: [
           Container(

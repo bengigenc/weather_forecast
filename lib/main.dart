@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_forecast/pages/home_detail.dart';
 import 'package:weather_forecast/pages/home_page.dart';
+import 'package:weather_forecast/providers/weather_provider.dart';
 import 'package:weather_forecast/widgets/days.dart';
 
 import 'package:weather_forecast/widgets/gridviewlist.dart';
@@ -11,7 +13,9 @@ import 'package:weather_forecast/widgets/prediction.dart';
 import 'package:weather_forecast/widgets/weather_list.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => WeatherProvider(),)],
+  builder: (context, child) => const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

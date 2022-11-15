@@ -2,9 +2,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_forecast/pages/home_detail.dart';
+import 'package:weather_forecast/providers/weather_provider.dart';
 import 'package:weather_forecast/widgets/days.dart';
 import 'package:weather_forecast/widgets/dropdownWidget.dart';
 import 'package:weather_forecast/widgets/prediction.dart';
@@ -168,134 +170,162 @@ class _HomePageState extends State<HomePage> {
       "bottombannerdegree": "17 ${"°C"}"
     }
   ];
+  WeatherProvider? wetProvider;
+  final _key1 = GlobalKey();
 
-final _key1= GlobalKey();
-void initState() {
-  super.initState();
-  WidgetsBinding.instance!.addPostFrameCallback(
-    (_) => ShowCaseWidget.of(context)!.startShowCase(
-      [
-        _key1,
-        
-        
-      ],
-    ),
-  );
-}
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => ShowCaseWidget.of(context)!.startShowCase(
+        [
+          _key1,
+        ],
+      ),
+    );
+    wetProvider = Provider.of<WeatherProvider>(context, listen: false);
+    wetProvider!.getWeatherData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: 100.h,
-          margin: EdgeInsets.only(top: 20, left: 15, right: 15),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 40.w,
-                    child: Row(
+        body: 
+      //   Consumer(
+      // builder: (context, WeatherProvider aa, child) => aa.isLoading == true
+      //     ? CircularProgressIndicator()
+      //     : 
+          SingleChildScrollView(
+              child: Container(
+                height: 100.h,
+                margin: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Color(0xff2E3A59),
+                        Container(
+                          width: 40.w,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Color(0xff2E3A59),
+                              ),
+                              Showcase(
+                                  key: _key1,
+                                  description: "location",
+                                  child: DropDownWidget()),
+                            ],
+                          ),
                         ),
-                        Showcase(
-                          key: _key1,
-                          description: "location",
-                          child: DropDownWidget()),
+                        SearchWidget()
                       ],
                     ),
-                  ),
-                  SearchWidget()
-                ],
-              ),
-              GestureDetector(child: FadeInLeft(delay: Duration(milliseconds: 2000),child: Weather_Home()), onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDetail(),));
-              },),
-              FadeInRight(
-                delay: Duration(milliseconds: 3000),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(top: 3.h),
-                  child: Text(
-                    "Cuaca Per Jam",
-                    style: TextStyle(
-                        color: Color(0xff000000),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              FadeInUp(
-                delay: Duration(milliseconds: 4000),
-                child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: 120,
-                  width: 500,
-                  child: ListView.builder(
-                    itemCount: weatherCategory.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return WeatherList(
-                          resimurl: weatherCategory[index]["resim"].toString(),
-                          degree:
-                              weatherCategory[index]["weatherdegree"].toString(),
-                          hour: weatherCategory[index]["time"].toString(),
-                          index: index);
-                    },
-                  ),
-                ),
-              ),
-              FadeInRight(
-                delay: Duration(milliseconds: 5000),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(top: 3.h, bottom: 3.h),
-                  child: Text(
-                    "Harian",
-                    style: TextStyle(
-                        color: Color(0xff000000),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              FadeInDown(delay: Duration(milliseconds: 6000),child: Prediction()),
-              FadeInUp(delay: Duration(milliseconds: 7000),
-                child: Container(
-                  child: SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      
-                      shrinkWrap: true,
-                      itemCount: bottombanner.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return Days(
-                          botbannerimage:
-                              bottombanner[index]["bottombannerimage"].toString(),
-                          botbannername:
-                              bottombanner[index]["bottombannername"].toString(),
-                          botbannerdetail: bottombanner[index]
-                                  ["bottombannerdetails"]
-                              .toString(),
-                          botbannerdegree: bottombanner[index]
-                                  ["bottombannerdegree"]
-                              .toString(),
-                          index: index,
-                        );
+                    Consumer(
+                      builder: (context, WeatherProvider value, child) {
+                        return Center(
+                      child: GestureDetector(
+                        child: FadeInLeft(
+                            delay: Duration(milliseconds: 2000),
+                            child: Weather_Home(
+                              currentRemoveRespontsive: wetProvider!.response,
+                            )),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeDetail(),
+                              ));
+                        },
+                      ),
+                      );
                       },
                     ),
-                  ),
+                    FadeInRight(
+                      delay: Duration(milliseconds: 3000),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(top: 3.h),
+                        child: Text("Ccccc",
+                          // wetProvider!.response.main!.temp.toString(),
+                          style: TextStyle(
+                              color: Color(0xff000000),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    FadeInUp(
+                      delay: Duration(milliseconds: 4000),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 120,
+                        width: 500,
+                        child: ListView.builder(
+                          itemCount: weatherCategory.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return WeatherList(
+                                resimurl:
+                                    weatherCategory[index]["resim"].toString(),
+                                degree: weatherCategory[index]["weatherdegree"]
+                                    .toString(),
+                                hour: weatherCategory[index]["time"].toString(),
+                                index: index);
+                          },
+                        ),
+                      ),
+                    ),
+                    FadeInRight(
+                      delay: Duration(milliseconds: 5000),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(top: 3.h, bottom: 3.h),
+                        child: Text(
+                          "Harian",
+                          style: TextStyle(
+                              color: Color(0xff000000),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    FadeInDown(
+                        delay: Duration(milliseconds: 6000),
+                        child: Prediction()),
+                    FadeInUp(
+                      delay: Duration(milliseconds: 7000),
+                      child: Container(
+                        child: SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: bottombanner.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              return Days(
+                                botbannerimage: bottombanner[index]
+                                        ["bottombannerimage"]
+                                    .toString(),
+                                botbannername: bottombanner[index]
+                                        ["bottombannername"]
+                                    .toString(),
+                                botbannerdetail: bottombanner[index]
+                                        ["bottombannerdetails"]
+                                    .toString(),
+                                botbannerdegree: bottombanner[index]
+                                        ["bottombannerdegree"]
+                                    .toString(),
+                                index: index,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

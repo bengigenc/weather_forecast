@@ -4,8 +4,11 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../modals/current_weather_resp.dart';
+
 class Weather_Home extends StatefulWidget {
-  const Weather_Home({super.key});
+  const Weather_Home({super.key, required this.currentRemoveRespontsive});
+  final CurrentRemoveRespontsive currentRemoveRespontsive;
 
   @override
   State<Weather_Home> createState() => _Weather_HomeState();
@@ -43,10 +46,10 @@ class _Weather_HomeState extends State<Weather_Home> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("18°C",
+                        Text(widget.currentRemoveRespontsive.main!.temp!.toInt().toString()+" °C",
                             style:
-                                TextStyle(fontSize: 14, color: Colors.white)),
-                        Text("Hujan Berawan ",
+                                TextStyle(fontSize: 16, color: Colors.white)),
+                        Text(widget.currentRemoveRespontsive.name.toString(),
                             style: TextStyle(fontSize: 20, color: Colors.white))
                       ],
                     )

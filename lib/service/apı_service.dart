@@ -8,7 +8,7 @@ Future<CurrentRemoveRespontsive?> getCurrentData(context ) async {
   CurrentRemoveRespontsive weatherResponse;
   try{
     final response = await http.get(Uri.parse(
-"https://api.openweathermap.org/data/2.5/weather?lat=41.022417&lon=29.034224&appid=623ef17ddb65ac2e8680be7c842f3911"));
+"https://api.openweathermap.org/data/2.5/weather?lat=41.022417&lon=29.034224&appid=623ef17ddb65ac2e8680be7c842f3911&lang=tr&units=metric"));
       weatherResponse= CurrentRemoveRespontsive.fromJson(jsonDecode(response.body));
 
       return weatherResponse;
